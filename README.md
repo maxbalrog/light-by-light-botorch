@@ -9,7 +9,7 @@ conda activate lbl-botorch
 ```
 Install standard packages
 ```bash
-conda install numpy cython matplotlib scipy=1.7.3 tqdm numexpr=2.8.4
+conda install numpy cython matplotlib scipy=1.8.1 tqdm numexpr=2.8.4
 ```
 Install postpic, pyfftw and vacem packages (postpic and vacem should be cloned from git beforehand)
 ```bash
