@@ -21,10 +21,11 @@ Install our light-by-light package
 ```bash
 pip install -e light-by-light
 ```
-Install botorch and ax
+Install botorch and ax (kaleido for visualization)
 ```bash
 pip install botorch
 pip install ax-platform
+pip install kaleido
 ```
 
 
