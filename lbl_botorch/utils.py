@@ -1,3 +1,8 @@
+'''
+Utility functions
+
+Author: Maksim Valialshchikov, @maxbalrog (github)
+'''
 import json
 from ax.storage.json_store.encoder import object_to_json
 from ax.storage.json_store.decoder import object_from_json

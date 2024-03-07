@@ -1,7 +1,14 @@
+'''
+Lbl trial evaluation
+
+Author: Maksim Valialshchikov, @maxbalrog (github)
+'''
 import numpy as np
 
 from light_by_light.vacem_simulation import run_simulation_postprocess
 from light_by_light.utils import read_yaml, write_yaml
+
+__all__ = ['run_trial', 'lbl_evaluation']
 
 
 def run_trial(simulation_params):
@@ -18,6 +25,9 @@ def run_trial(simulation_params):
 def lbl_evaluation(parameterization):
     default_params = read_yaml(parameterization['default_yaml'])
     save_path = default_params['save_path']
+    scales = default_params.get('scales', {})
+    default_params.pop('scales', None)
+    
     trial_idx = parameterization['trial_idx']
     print(parameterization)
     parameterization.pop('default_yaml', None)
@@ -30,7 +40,8 @@ def lbl_evaluation(parameterization):
     for key,value in parameterization.items():
         if 'laser' in key:
             laser, param = key.split('/')
-            default_params['laser_params'][laser][param] = value
+            scale = scales.get(param, 1)
+            default_params['laser_params'][laser][param] = value*scale
         elif 'box_factors' in key or 'resolutions' in key:
             sim, param = key.split('/')
             default_params['simbox_params'][sim][param] = value

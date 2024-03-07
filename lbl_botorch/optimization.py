@@ -1,3 +1,8 @@
+'''
+Optimization functions
+
+Author: Maksim Valialshchikov, @maxbalrog (github)
+'''
 import os
 import json
 import time
@@ -8,6 +13,8 @@ from submitit import AutoExecutor, LocalJob, DebugJob
 from light_by_light.utils import read_yaml
 from lbl_botorch.evaluate_trial import lbl_evaluation
 from lbl_botorch.utils import save_optimization_state
+
+__all__ = ['run_axclient_optimization', 'run_axclient_optimization_batch']
 
 
 def run_axclient_optimization(params_yaml):
@@ -48,14 +55,12 @@ def run_axclient_optimization_batch(params_yaml):
         parameters=params['parameters'],
         objectives={name: ObjectiveProperties(minimize=flag) for name,flag in objectives},
         parameter_constraints=params.get('parameter_constraints', None),
-        outcome_constraints=params.get('outcome_constraints', None),  # Optional.
+        outcome_constraints=params.get('outcome_constraints', None),
     )
 
     cluster = params.get('cluster', 'slurm')
     executor = AutoExecutor(folder=f"{save_path}/submitit_runs", cluster=cluster)
     executor.update_parameters(**params['sbatch_params'])
-    # executor.update_parameters(timeout_min=60)
-    # executor.update_parameters(cpus_per_task=2)
 
     num_parallel_jobs = params.get('num_parallel_jobs', 3)
     
