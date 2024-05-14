@@ -29,7 +29,6 @@ def lbl_evaluation(parameterization):
     default_params.pop('scales', None)
     
     trial_idx = parameterization['trial_idx']
-    print(parameterization)
     parameterization.pop('default_yaml', None)
     parameterization.pop('trial_idx', None)
 
