@@ -25,13 +25,15 @@ def get_model_from_experiment(experiment):
     return get_GPEI(experiment, experiment.fetch_data())
 
 
-def gather_trials_data(ax_client, metric_name='N_disc'):
+def gather_trials_data(ax_client, metric_names=['N_total','N_disc']):
     metrics = ax_client.experiment.fetch_data().df
     trials = ax_client.experiment.trials
     trials_params = {key: trial.arm.parameters for key,trial in trials.items()}
+    print(metrics)
     for key in trials_params:
-        condition = (metrics['metric_name'] == metric_name) & (metrics['trial_index'] == key)
-        trials_params[key][metric_name] = metrics.loc[condition]['mean'].iloc[0]
+        for metric_name in metric_names:
+            condition = (metrics['metric_name'] == metric_name) & (metrics['trial_index'] == key)
+            trials_params[key][metric_name] = metrics.loc[condition]['mean'].iloc[0]
         if 'default_yaml' in trials_params[key].keys():
             trials_params[key].pop('default_yaml')
     return trials_params
